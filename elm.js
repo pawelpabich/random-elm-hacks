@@ -11421,9 +11421,9 @@ Elm.Product.make = function (_elm) {
    var update = F2(function (action,model) {
       var _p0 = action;
       if (_p0.ctor === "Increment") {
-            return model + 1;
+            return _U.update(model,{quantity: model.quantity + 1});
          } else {
-            return model + 1;
+            return _U.update(model,{quantity: model.quantity - 1});
          }
    });
    var Decrement = {ctor: "Decrement"};
@@ -11431,17 +11431,24 @@ Elm.Product.make = function (_elm) {
    var view = F2(function (address,model) {
       return A2($Html.div,
       _U.list([]),
-      _U.list([A2($Html.button,
+      _U.list([A2($Html.p,
+              _U.list([]),
+              _U.list([$Html.text(model.name)]))
+              ,A2($Html.button,
               _U.list([A2($Html$Events.onClick,address,Decrement)]),
               _U.list([$Html.text("-")]))
               ,A2($Html.div,
               _U.list([]),
-              _U.list([$Html.text($Basics.toString(model))]))
+              _U.list([$Html.text($Basics.toString(model.quantity))]))
               ,A2($Html.button,
               _U.list([A2($Html$Events.onClick,address,Increment)]),
               _U.list([$Html.text("+")]))]));
    });
+   var Location = F2(function (a,b) {
+      return {quantity: a,name: b};
+   });
    return _elm.Product.values = {_op: _op
+                                ,Location: Location
                                 ,Increment: Increment
                                 ,Decrement: Decrement
                                 ,update: update
@@ -11462,7 +11469,8 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: 0
+   var main = $StartApp$Simple.start({model: {name: "Phone"
+                                             ,quantity: 0}
                                      ,update: $Product.update
                                      ,view: $Product.view});
    return _elm.Main.values = {_op: _op,main: main};

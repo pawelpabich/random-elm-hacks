@@ -13,7 +13,8 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: 0
+   var main = $StartApp$Simple.start({model: {name: "Phone"
+                                             ,quantity: 0}
                                      ,update: $Product.update
                                      ,view: $Product.view});
    return _elm.Main.values = {_op: _op,main: main};
