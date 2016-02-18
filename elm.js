@@ -11417,16 +11417,22 @@ Elm.Product.make = function (_elm) {
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm);
    var _op = {};
    var update = F2(function (action,model) {
       var _p0 = action;
-      if (_p0.ctor === "Increment") {
-            return _U.update(model,{quantity: model.quantity + 1});
-         } else {
-            return _U.update(model,{quantity: model.quantity - 1});
-         }
+      switch (_p0.ctor)
+      {case "Increment": return _U.update(model,
+           {quantity: model.quantity + 1});
+         case "Decrement": return _U.update(model,
+           {quantity: model.quantity - 1});
+         default: return _U.update(model,
+           {quantity: model.quantity + A2($Maybe.withDefault,
+           0,
+           $Result.toMaybe($String.toInt(_p0._0)))});}
    });
+   var Type = function (a) {    return {ctor: "Type",_0: a};};
    var Decrement = {ctor: "Decrement"};
    var Increment = {ctor: "Increment"};
    var view = F2(function (address,model) {
@@ -11436,7 +11442,13 @@ Elm.Product.make = function (_elm) {
               _U.list([]),
               _U.list([$Html.text(model.name)]))
               ,A2($Html.input,
-              _U.list([$Html$Attributes.value($Basics.toString(model.quantity))]),
+              _U.list([$Html$Attributes.value($Basics.toString(model.quantity))
+                      ,A3($Html$Events.on,
+                      "input",
+                      $Html$Events.targetValue,
+                      function (_p1) {
+                         return A2($Signal.message,address,Type(_p1));
+                      })]),
               _U.list([]))
               ,A2($Html.button,
               _U.list([A2($Html$Events.onClick,address,Increment)]),
@@ -11452,6 +11464,7 @@ Elm.Product.make = function (_elm) {
                                 ,Location: Location
                                 ,Increment: Increment
                                 ,Decrement: Decrement
+                                ,Type: Type
                                 ,update: update
                                 ,view: view};
 };
