@@ -23,9 +23,11 @@ Elm.Product.make = function (_elm) {
          case "Decrement": return _U.update(model,
            {quantity: model.quantity - 1});
          default: return _U.update(model,
-           {quantity: model.quantity + A2($Maybe.withDefault,
-           0,
-           $Result.toMaybe($String.toInt(_p0._0)))});}
+           {quantity: A2($Debug.watch,
+           "parsedvalue",
+           A2($Maybe.withDefault,
+           model.quantity,
+           $Result.toMaybe($String.toInt(_p0._0))))});}
    });
    var Type = function (a) {    return {ctor: "Type",_0: a};};
    var Decrement = {ctor: "Decrement"};

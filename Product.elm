@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (style, value)
 import Html.Events exposing (on, onClick, targetValue)
 import String
+import Debug
 
 type alias Location = 
     { 
@@ -25,7 +26,7 @@ update action model =
                      }
         Type text -> {
                         model | 
-                            quantity = model.quantity + (String.toInt text|> Result.toMaybe |> Maybe.withDefault 0)
+                            quantity =  Debug.watch "parsedvalue" (String.toInt text|> Result.toMaybe |> Maybe.withDefault model.quantity)
                     }
 
 view address model = 
