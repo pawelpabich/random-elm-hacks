@@ -1,10 +1,10 @@
 module Product where
 
 import Html exposing (..)
-import Html.Attributes exposing (style)
-import Html.Events exposing (onClick)
+import Html.Attributes exposing (style, value)
+import Html.Events exposing (on, onClick, targetValue)
 
-type alias Location =      -- type aliases for records
+type alias Location = 
     { 
         quantity : Int,
         name : String
@@ -25,10 +25,10 @@ update action model =
 
 view address model = 
     div []
-        [ p [] [text model.name],
-          button [onClick address Decrement] [text "-"],
-          div [] [text (toString model.quantity)], 
-          button [onClick address Increment] [text "+"]
+        [ span [] [text model.name],          
+          input  [toString model.quantity |> value] [], 
+          button [onClick address Increment] [text "+"],
+          button [onClick address Decrement] [text "-"]
         ]
             
           

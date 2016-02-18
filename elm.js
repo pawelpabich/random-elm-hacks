@@ -11412,6 +11412,7 @@ Elm.Product.make = function (_elm) {
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
    $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
    $Html$Events = Elm.Html.Events.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
@@ -11431,18 +11432,18 @@ Elm.Product.make = function (_elm) {
    var view = F2(function (address,model) {
       return A2($Html.div,
       _U.list([]),
-      _U.list([A2($Html.p,
+      _U.list([A2($Html.span,
               _U.list([]),
               _U.list([$Html.text(model.name)]))
-              ,A2($Html.button,
-              _U.list([A2($Html$Events.onClick,address,Decrement)]),
-              _U.list([$Html.text("-")]))
-              ,A2($Html.div,
-              _U.list([]),
-              _U.list([$Html.text($Basics.toString(model.quantity))]))
+              ,A2($Html.input,
+              _U.list([$Html$Attributes.value($Basics.toString(model.quantity))]),
+              _U.list([]))
               ,A2($Html.button,
               _U.list([A2($Html$Events.onClick,address,Increment)]),
-              _U.list([$Html.text("+")]))]));
+              _U.list([$Html.text("+")]))
+              ,A2($Html.button,
+              _U.list([A2($Html$Events.onClick,address,Decrement)]),
+              _U.list([$Html.text("-")]))]));
    });
    var Location = F2(function (a,b) {
       return {quantity: a,name: b};
