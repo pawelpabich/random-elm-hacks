@@ -16,12 +16,6 @@ type alias Model =
 
 type ACTION = ShoppingCart ShoppingCart.ACTION | Products Products.ACTION
 
-init products shoppingCart = 
-    {
-        products = products,
-        shoppingCart = shoppingCart
-    }
-
 update : ACTION -> Model -> Model           
 update action model = 
     case action of 
@@ -29,7 +23,10 @@ update action model =
                         model |
                             shoppingCart = ShoppingCart.update act model.shoppingCart
                     }
-        Products act -> model
+        Products act -> { 
+                        model |
+                            products = Products.update act model.products
+                    }
 
 view : Signal.Address ACTION -> Model -> Html                       
 view address model = 

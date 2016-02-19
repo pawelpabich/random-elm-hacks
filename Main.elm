@@ -1,11 +1,11 @@
-import Application exposing (view, update, init)
+import Application
 import StartApp.Simple exposing (start)
 
 main =
   start
-    { model =  init [{name = "Phone"}, {name = "Ski"}] [],
-      update = update,
-      view = view
+    { model =  { products = [{name = "Phone"}, {name = "Ski"}], shoppingCart = [] },
+      update = Application.update,
+      view = Application.view
     }
 
           

@@ -22,11 +22,9 @@ Elm.Application.make = function (_elm) {
             _p0._0,
             model.shoppingCart)});
          } else {
-            return model;
+            return _U.update(model,
+            {products: A2($Products.update,_p0._0,model.products)});
          }
-   });
-   var init = F2(function (products,shoppingCart) {
-      return {products: products,shoppingCart: shoppingCart};
    });
    var Products = function (a) {
       return {ctor: "Products",_0: a};
@@ -51,7 +49,6 @@ Elm.Application.make = function (_elm) {
                                     ,Model: Model
                                     ,ShoppingCart: ShoppingCart
                                     ,Products: Products
-                                    ,init: init
                                     ,update: update
                                     ,view: view};
 };

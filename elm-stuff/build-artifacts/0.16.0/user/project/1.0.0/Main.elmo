@@ -13,9 +13,9 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: A2($Application.init,
-                                     _U.list([{name: "Phone"},{name: "Ski"}]),
-                                     _U.list([]))
+   var main = $StartApp$Simple.start({model: {products: _U.list([{name: "Phone"}
+                                                                ,{name: "Ski"}])
+                                             ,shoppingCart: _U.list([])}
                                      ,update: $Application.update
                                      ,view: $Application.view});
    return _elm.Main.values = {_op: _op,main: main};

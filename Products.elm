@@ -15,7 +15,7 @@ type ACTION = Buy String | None Product.ACTION
 update : ACTION -> Model -> Model
 update action model = 
     case action of 
-        Buy name -> List.filter (\p -> p.name /= name) model
+        Buy name -> Debug.watch "newproducts " (List.filter (\p -> p.name /= name) model)
         None act -> model
 
 view : Signal.Address ACTION -> Model -> Html                    

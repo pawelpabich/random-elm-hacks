@@ -11450,11 +11450,13 @@ Elm.Products.make = function (_elm) {
    var update = F2(function (action,model) {
       var _p0 = action;
       if (_p0.ctor === "Buy") {
-            return A2($List.filter,
+            return A2($Debug.watch,
+            "newproducts ",
+            A2($List.filter,
             function (p) {
                return !_U.eq(p.name,_p0._0);
             },
-            model);
+            model));
          } else {
             return model;
          }
@@ -11596,11 +11598,9 @@ Elm.Application.make = function (_elm) {
             _p0._0,
             model.shoppingCart)});
          } else {
-            return model;
+            return _U.update(model,
+            {products: A2($Products.update,_p0._0,model.products)});
          }
-   });
-   var init = F2(function (products,shoppingCart) {
-      return {products: products,shoppingCart: shoppingCart};
    });
    var Products = function (a) {
       return {ctor: "Products",_0: a};
@@ -11625,7 +11625,6 @@ Elm.Application.make = function (_elm) {
                                     ,Model: Model
                                     ,ShoppingCart: ShoppingCart
                                     ,Products: Products
-                                    ,init: init
                                     ,update: update
                                     ,view: view};
 };
@@ -11644,9 +11643,9 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: A2($Application.init,
-                                     _U.list([{name: "Phone"},{name: "Ski"}]),
-                                     _U.list([]))
+   var main = $StartApp$Simple.start({model: {products: _U.list([{name: "Phone"}
+                                                                ,{name: "Ski"}])
+                                             ,shoppingCart: _U.list([])}
                                      ,update: $Application.update
                                      ,view: $Application.view});
    return _elm.Main.values = {_op: _op,main: main};
