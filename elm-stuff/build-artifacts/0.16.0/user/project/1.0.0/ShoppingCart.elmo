@@ -30,7 +30,7 @@ Elm.ShoppingCart.make = function (_elm) {
               {quantity: i.quantity - 1}) : i;
            },
            model);
-         default: return A2($List.map,
+         case "Type": return A2($List.map,
            function (i) {
               return _U.eq(i.name,_p0._0) ? _U.update(i,
               {quantity: A2($Maybe.withDefault,
@@ -39,8 +39,12 @@ Elm.ShoppingCart.make = function (_elm) {
               "parsedvalue",
               _p0._1))))}) : i;
            },
+           model);
+         default: return A2($List._op["::"],
+           {name: _p0._0,quantity: 0},
            model);}
    });
+   var Add = function (a) {    return {ctor: "Add",_0: a};};
    var Type = F2(function (a,b) {
       return {ctor: "Type",_0: a,_1: b};
    });
@@ -86,6 +90,7 @@ Elm.ShoppingCart.make = function (_elm) {
                                      ,Increment: Increment
                                      ,Decrement: Decrement
                                      ,Type: Type
+                                     ,Add: Add
                                      ,update: update
                                      ,view: view};
 };

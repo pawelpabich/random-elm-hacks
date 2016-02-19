@@ -11515,7 +11515,7 @@ Elm.ShoppingCart.make = function (_elm) {
               {quantity: i.quantity - 1}) : i;
            },
            model);
-         default: return A2($List.map,
+         case "Type": return A2($List.map,
            function (i) {
               return _U.eq(i.name,_p0._0) ? _U.update(i,
               {quantity: A2($Maybe.withDefault,
@@ -11524,8 +11524,12 @@ Elm.ShoppingCart.make = function (_elm) {
               "parsedvalue",
               _p0._1))))}) : i;
            },
+           model);
+         default: return A2($List._op["::"],
+           {name: _p0._0,quantity: 0},
            model);}
    });
+   var Add = function (a) {    return {ctor: "Add",_0: a};};
    var Type = F2(function (a,b) {
       return {ctor: "Type",_0: a,_1: b};
    });
@@ -11571,6 +11575,7 @@ Elm.ShoppingCart.make = function (_elm) {
                                      ,Increment: Increment
                                      ,Decrement: Decrement
                                      ,Type: Type
+                                     ,Add: Add
                                      ,update: update
                                      ,view: view};
 };
@@ -11598,8 +11603,22 @@ Elm.Application.make = function (_elm) {
             _p0._0,
             model.shoppingCart)});
          } else {
-            return _U.update(model,
-            {products: A2($Products.update,_p0._0,model.products)});
+            var _p2 = _p0._0;
+            var _p1 = _p2;
+            if (_p1.ctor === "Buy") {
+                  return _U.update(model,
+                  {products: A2($Products.update,
+                  A2($Debug.watch,"act1",_p2),
+                  model.products)
+                  ,shoppingCart: A2($ShoppingCart.update,
+                  $ShoppingCart.Add(_p1._0),
+                  model.shoppingCart)});
+               } else {
+                  return _U.update(model,
+                  {products: A2($Products.update,
+                  A2($Debug.watch,"act2",_p2),
+                  model.products)});
+               }
          }
    });
    var Products = function (a) {

@@ -23,10 +23,18 @@ update action model =
                         model |
                             shoppingCart = ShoppingCart.update act model.shoppingCart
                     }
-        Products act -> { 
-                        model |
-                            products = Products.update act model.products
-                    }
+        Products act ->
+                        case act of 
+                            Products.Buy name ->  { 
+                                model |
+                                    products = Products.update (Debug.watch "act1" act) model.products,
+                                    shoppingCart = ShoppingCart.update (ShoppingCart.Add name) model.shoppingCart
+                            }
+                            _ ->
+                            { 
+                                model |
+                                    products = Products.update (Debug.watch "act2" act) model.products
+                            }
 
 view : Signal.Address ACTION -> Model -> Html                       
 view address model = 
