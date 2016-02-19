@@ -20,9 +20,9 @@ type ACTION = Increment String | Decrement String | Type String String
 update : ACTION -> Model -> Model
 update action model = 
     case action of 
-        Increment name -> List.map (\i -> if i.name == name then { i | quantity = i.quantity + 1 } else i)
-        Decrement name -> List.map (\i -> if i.name == name then { i | quantity = i.quantity - 1 } else i)
-        Type name text -> List.map (\i -> if i.name == name then { i | quantity = Debug.watch "parsedvalue" text |> String.toInt |> Result.toMaybe |> Maybe.withDefault i.quantity } else i)
+        Increment name -> List.map (\i -> if i.name == name then { i | quantity = i.quantity + 1 } else i) model
+        Decrement name -> List.map (\i -> if i.name == name then { i | quantity = i.quantity - 1 } else i) model
+        Type name text -> List.map (\i -> if i.name == name then { i | quantity = Debug.watch "parsedvalue" text |> String.toInt |> Result.toMaybe |> Maybe.withDefault i.quantity } else i) model
 
 view : Signal.Address ACTION -> Model -> Html  
 view address model = 

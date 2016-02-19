@@ -11360,6 +11360,49 @@ Elm.Html.Events.make = function (_elm) {
                                     ,keyCode: keyCode
                                     ,Options: Options};
 };
+Elm.StartApp = Elm.StartApp || {};
+Elm.StartApp.Simple = Elm.StartApp.Simple || {};
+Elm.StartApp.Simple.make = function (_elm) {
+   "use strict";
+   _elm.StartApp = _elm.StartApp || {};
+   _elm.StartApp.Simple = _elm.StartApp.Simple || {};
+   if (_elm.StartApp.Simple.values)
+   return _elm.StartApp.Simple.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var start = function (config) {
+      var update = F2(function (maybeAction,model) {
+         var _p0 = maybeAction;
+         if (_p0.ctor === "Just") {
+               return A2(config.update,_p0._0,model);
+            } else {
+               return _U.crashCase("StartApp.Simple",
+               {start: {line: 91,column: 7},end: {line: 96,column: 52}},
+               _p0)("This should never happen.");
+            }
+      });
+      var actions = $Signal.mailbox($Maybe.Nothing);
+      var address = A2($Signal.forwardTo,actions.address,$Maybe.Just);
+      var model = A3($Signal.foldp,
+      update,
+      config.model,
+      actions.signal);
+      return A2($Signal.map,config.view(address),model);
+   };
+   var Config = F3(function (a,b,c) {
+      return {model: a,view: b,update: c};
+   });
+   return _elm.StartApp.Simple.values = {_op: _op
+                                        ,Config: Config
+                                        ,start: start};
+};
 Elm.Product = Elm.Product || {};
 Elm.Product.make = function (_elm) {
    "use strict";
@@ -11437,4 +11480,174 @@ Elm.Products.make = function (_elm) {
                                  ,None: None
                                  ,update: update
                                  ,view: view};
+};
+Elm.ShoppingCart = Elm.ShoppingCart || {};
+Elm.ShoppingCart.make = function (_elm) {
+   "use strict";
+   _elm.ShoppingCart = _elm.ShoppingCart || {};
+   if (_elm.ShoppingCart.values) return _elm.ShoppingCart.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm);
+   var _op = {};
+   var update = F2(function (action,model) {
+      var _p0 = action;
+      switch (_p0.ctor)
+      {case "Increment": return A2($List.map,
+           function (i) {
+              return _U.eq(i.name,_p0._0) ? _U.update(i,
+              {quantity: i.quantity + 1}) : i;
+           },
+           model);
+         case "Decrement": return A2($List.map,
+           function (i) {
+              return _U.eq(i.name,_p0._0) ? _U.update(i,
+              {quantity: i.quantity - 1}) : i;
+           },
+           model);
+         default: return A2($List.map,
+           function (i) {
+              return _U.eq(i.name,_p0._0) ? _U.update(i,
+              {quantity: A2($Maybe.withDefault,
+              i.quantity,
+              $Result.toMaybe($String.toInt(A2($Debug.watch,
+              "parsedvalue",
+              _p0._1))))}) : i;
+           },
+           model);}
+   });
+   var Type = F2(function (a,b) {
+      return {ctor: "Type",_0: a,_1: b};
+   });
+   var Decrement = function (a) {
+      return {ctor: "Decrement",_0: a};
+   };
+   var Increment = function (a) {
+      return {ctor: "Increment",_0: a};
+   };
+   var view = F2(function (address,model) {
+      return A2($Html.div,
+      _U.list([]),
+      A2($List.map,
+      function (i) {
+         return A2($Html.div,
+         _U.list([]),
+         _U.list([A2($Html.span,
+                 _U.list([]),
+                 _U.list([$Html.text(i.name)]))
+                 ,A2($Html.input,
+                 _U.list([$Html$Attributes.value($Basics.toString(i.quantity))
+                         ,A3($Html$Events.on,
+                         "input",
+                         $Html$Events.targetValue,
+                         function (_p1) {
+                            return A2($Signal.message,address,A2(Type,i.name,_p1));
+                         })]),
+                 _U.list([]))
+                 ,A2($Html.button,
+                 _U.list([A2($Html$Events.onClick,address,Increment(i.name))]),
+                 _U.list([$Html.text("+")]))
+                 ,A2($Html.button,
+                 _U.list([A2($Html$Events.onClick,address,Decrement(i.name))]),
+                 _U.list([$Html.text("-")]))]));
+      },
+      model));
+   });
+   var Item = F2(function (a,b) {
+      return {quantity: a,name: b};
+   });
+   return _elm.ShoppingCart.values = {_op: _op
+                                     ,Item: Item
+                                     ,Increment: Increment
+                                     ,Decrement: Decrement
+                                     ,Type: Type
+                                     ,update: update
+                                     ,view: view};
+};
+Elm.Application = Elm.Application || {};
+Elm.Application.make = function (_elm) {
+   "use strict";
+   _elm.Application = _elm.Application || {};
+   if (_elm.Application.values) return _elm.Application.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Products = Elm.Products.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $ShoppingCart = Elm.ShoppingCart.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var update = F2(function (action,model) {
+      var _p0 = action;
+      if (_p0.ctor === "ShoppingCart") {
+            return _U.update(model,
+            {shoppingCart: A2($ShoppingCart.update,
+            _p0._0,
+            model.shoppingCart)});
+         } else {
+            return model;
+         }
+   });
+   var init = F2(function (products,shoppingCart) {
+      return {products: products,shoppingCart: shoppingCart};
+   });
+   var Products = function (a) {
+      return {ctor: "Products",_0: a};
+   };
+   var ShoppingCart = function (a) {
+      return {ctor: "ShoppingCart",_0: a};
+   };
+   var view = F2(function (address,model) {
+      return A2($Html.div,
+      _U.list([]),
+      _U.list([A2($Products.view,
+              A2($Signal.forwardTo,address,Products),
+              model.products)
+              ,A2($ShoppingCart.view,
+              A2($Signal.forwardTo,address,ShoppingCart),
+              model.shoppingCart)]));
+   });
+   var Model = F2(function (a,b) {
+      return {products: a,shoppingCart: b};
+   });
+   return _elm.Application.values = {_op: _op
+                                    ,Model: Model
+                                    ,ShoppingCart: ShoppingCart
+                                    ,Products: Products
+                                    ,init: init
+                                    ,update: update
+                                    ,view: view};
+};
+Elm.Main = Elm.Main || {};
+Elm.Main.make = function (_elm) {
+   "use strict";
+   _elm.Main = _elm.Main || {};
+   if (_elm.Main.values) return _elm.Main.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Application = Elm.Application.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
+   var _op = {};
+   var main = $StartApp$Simple.start({model: A2($Application.init,
+                                     _U.list([{name: "Phone"},{name: "Ski"}]),
+                                     _U.list([]))
+                                     ,update: $Application.update
+                                     ,view: $Application.view});
+   return _elm.Main.values = {_op: _op,main: main};
 };

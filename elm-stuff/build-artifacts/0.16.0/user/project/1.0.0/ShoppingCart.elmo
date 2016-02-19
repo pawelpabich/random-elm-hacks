@@ -18,22 +18,28 @@ Elm.ShoppingCart.make = function (_elm) {
    var update = F2(function (action,model) {
       var _p0 = action;
       switch (_p0.ctor)
-      {case "Increment": return $List.map(function (i) {
+      {case "Increment": return A2($List.map,
+           function (i) {
               return _U.eq(i.name,_p0._0) ? _U.update(i,
               {quantity: i.quantity + 1}) : i;
-           });
-         case "Decrement": return $List.map(function (i) {
+           },
+           model);
+         case "Decrement": return A2($List.map,
+           function (i) {
               return _U.eq(i.name,_p0._0) ? _U.update(i,
               {quantity: i.quantity - 1}) : i;
-           });
-         default: return $List.map(function (i) {
+           },
+           model);
+         default: return A2($List.map,
+           function (i) {
               return _U.eq(i.name,_p0._0) ? _U.update(i,
               {quantity: A2($Maybe.withDefault,
               i.quantity,
               $Result.toMaybe($String.toInt(A2($Debug.watch,
               "parsedvalue",
               _p0._1))))}) : i;
-           });}
+           },
+           model);}
    });
    var Type = F2(function (a,b) {
       return {ctor: "Type",_0: a,_1: b};

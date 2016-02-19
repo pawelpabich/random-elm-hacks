@@ -21,7 +21,8 @@ init products shoppingCart =
         products = products,
         shoppingCart = shoppingCart
     }
-           
+
+update : ACTION -> Model -> Model           
 update action model = 
     case action of 
         ShoppingCart act -> { 

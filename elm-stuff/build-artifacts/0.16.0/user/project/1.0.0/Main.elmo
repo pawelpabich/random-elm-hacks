@@ -4,27 +4,19 @@ Elm.Main.make = function (_elm) {
    _elm.Main = _elm.Main || {};
    if (_elm.Main.values) return _elm.Main.values;
    var _U = Elm.Native.Utils.make(_elm),
+   $Application = Elm.Application.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
-   $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
+   $Signal = Elm.Signal.make(_elm),
+   $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var test1 = function (model) {    return model;};
-   var test = function (model) {    return model;};
-   var main = $Graphics$Element.show(_U.list([test(A2($List.map,
-   function (i) {
-      return {quantity: i,name: "test"};
-   },
-   _U.list([1,2,3,4])))]));
-   var Item = F2(function (a,b) {
-      return {quantity: a,name: b};
-   });
-   return _elm.Main.values = {_op: _op
-                             ,Item: Item
-                             ,test: test
-                             ,test1: test1
-                             ,main: main};
+   var main = $StartApp$Simple.start({model: A2($Application.init,
+                                     _U.list([{name: "Phone"},{name: "Ski"}]),
+                                     _U.list([]))
+                                     ,update: $Application.update
+                                     ,view: $Application.view});
+   return _elm.Main.values = {_op: _op,main: main};
 };
