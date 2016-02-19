@@ -1,0 +1,50 @@
+Elm.Products = Elm.Products || {};
+Elm.Products.make = function (_elm) {
+   "use strict";
+   _elm.Products = _elm.Products || {};
+   if (_elm.Products.values) return _elm.Products.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Product = Elm.Product.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var update = F2(function (action,model) {
+      var _p0 = action;
+      if (_p0.ctor === "Buy") {
+            return A2($List.filter,
+            function (p) {
+               return !_U.eq(p.name,_p0._0);
+            },
+            model);
+         } else {
+            return model;
+         }
+   });
+   var None = function (a) {    return {ctor: "None",_0: a};};
+   var Buy = function (a) {    return {ctor: "Buy",_0: a};};
+   var view = F2(function (address,model) {
+      return A2($Html.div,
+      _U.list([]),
+      A2($List.map,
+      function (p) {
+         return A2($Html.div,
+         _U.list([]),
+         _U.list([A2($Product.view,A2($Signal.forwardTo,address,None),p)
+                 ,A2($Html.button,
+                 _U.list([A2($Html$Events.onClick,address,Buy(p.name))]),
+                 _U.list([$Html.text("Buy")]))]));
+      },
+      model));
+   });
+   return _elm.Products.values = {_op: _op
+                                 ,Buy: Buy
+                                 ,None: None
+                                 ,update: update
+                                 ,view: view};
+};

@@ -1,0 +1,85 @@
+Elm.ShoppingCart = Elm.ShoppingCart || {};
+Elm.ShoppingCart.make = function (_elm) {
+   "use strict";
+   _elm.ShoppingCart = _elm.ShoppingCart || {};
+   if (_elm.ShoppingCart.values) return _elm.ShoppingCart.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $Html$Attributes = Elm.Html.Attributes.make(_elm),
+   $Html$Events = Elm.Html.Events.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm);
+   var _op = {};
+   var update = F2(function (action,model) {
+      var _p0 = action;
+      switch (_p0.ctor)
+      {case "Increment": return $List.map(function (i) {
+              return _U.eq(i.name,_p0._0) ? _U.update(i,
+              {quantity: i.quantity + 1}) : i;
+           });
+         case "Decrement": return $List.map(function (i) {
+              return _U.eq(i.name,_p0._0) ? _U.update(i,
+              {quantity: i.quantity - 1}) : i;
+           });
+         default: return $List.map(function (i) {
+              return _U.eq(i.name,_p0._0) ? _U.update(i,
+              {quantity: A2($Maybe.withDefault,
+              i.quantity,
+              $Result.toMaybe($String.toInt(A2($Debug.watch,
+              "parsedvalue",
+              _p0._1))))}) : i;
+           });}
+   });
+   var Type = F2(function (a,b) {
+      return {ctor: "Type",_0: a,_1: b};
+   });
+   var Decrement = function (a) {
+      return {ctor: "Decrement",_0: a};
+   };
+   var Increment = function (a) {
+      return {ctor: "Increment",_0: a};
+   };
+   var view = F2(function (address,model) {
+      return A2($Html.div,
+      _U.list([]),
+      A2($List.map,
+      function (i) {
+         return A2($Html.div,
+         _U.list([]),
+         _U.list([A2($Html.span,
+                 _U.list([]),
+                 _U.list([$Html.text(i.name)]))
+                 ,A2($Html.input,
+                 _U.list([$Html$Attributes.value($Basics.toString(i.quantity))
+                         ,A3($Html$Events.on,
+                         "input",
+                         $Html$Events.targetValue,
+                         function (_p1) {
+                            return A2($Signal.message,address,A2(Type,i.name,_p1));
+                         })]),
+                 _U.list([]))
+                 ,A2($Html.button,
+                 _U.list([A2($Html$Events.onClick,address,Increment(i.name))]),
+                 _U.list([$Html.text("+")]))
+                 ,A2($Html.button,
+                 _U.list([A2($Html$Events.onClick,address,Decrement(i.name))]),
+                 _U.list([$Html.text("-")]))]));
+      },
+      model));
+   });
+   var Item = F2(function (a,b) {
+      return {quantity: a,name: b};
+   });
+   return _elm.ShoppingCart.values = {_op: _op
+                                     ,Item: Item
+                                     ,Increment: Increment
+                                     ,Decrement: Decrement
+                                     ,Type: Type
+                                     ,update: update
+                                     ,view: view};
+};
