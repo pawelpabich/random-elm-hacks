@@ -10,16 +10,15 @@ import List
 
 type alias Model = List Product.Model
     
-type ACTION = Buy String | None Product.ACTION
+type Action = Buy String
 
-update : ACTION -> Model -> Model
+update : Action -> Model -> Model
 update action model = 
     case action of 
         Buy name -> Debug.watch "newproducts " (List.filter (\p -> p.name /= name) model)
-        None act -> model
 
-view : Signal.Address ACTION -> Model -> Html                    
+view : Signal.Address Action -> Model -> Html                    
 view address model = 
-    div [] (List.map (\p -> div [] [Product.view (Signal.forwardTo address None) p, button [onClick address (Buy p.name)] [text "Buy"]]) model)
+    div [] (List.map (\p -> div [] [Product.view p, button [onClick address (Buy p.name)] [text "Buy"]]) model)
             
           

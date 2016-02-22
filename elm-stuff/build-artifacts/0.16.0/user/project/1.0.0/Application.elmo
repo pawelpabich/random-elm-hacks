@@ -24,20 +24,11 @@ Elm.Application.make = function (_elm) {
          } else {
             var _p2 = _p0._0;
             var _p1 = _p2;
-            if (_p1.ctor === "Buy") {
-                  return _U.update(model,
-                  {products: A2($Products.update,
-                  A2($Debug.watch,"act1",_p2),
-                  model.products)
-                  ,shoppingCart: A2($ShoppingCart.update,
-                  $ShoppingCart.Add(_p1._0),
-                  model.shoppingCart)});
-               } else {
-                  return _U.update(model,
-                  {products: A2($Products.update,
-                  A2($Debug.watch,"act2",_p2),
-                  model.products)});
-               }
+            return _U.update(model,
+            {products: A2($Products.update,_p2,model.products)
+            ,shoppingCart: A2($ShoppingCart.update,
+            $ShoppingCart.Add(_p1._0),
+            model.shoppingCart)});
          }
    });
    var Products = function (a) {

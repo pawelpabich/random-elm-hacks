@@ -14,10 +14,10 @@ type alias Item =
 
 type alias Model = List Item
     
-type ACTION = Increment String | Decrement String | Type String String | Add String
+type Action = Increment String | Decrement String | Type String String | Add String
 
 
-update : ACTION -> Model -> Model
+update : Action -> Model -> Model
 update action model = 
     case action of 
         Increment name -> List.map (\i -> if i.name == name then { i | quantity = i.quantity + 1 } else i) model
@@ -25,7 +25,7 @@ update action model =
         Type name text -> List.map (\i -> if i.name == name then { i | quantity = Debug.watch "parsedvalue" text |> String.toInt |> Result.toMaybe |> Maybe.withDefault i.quantity } else i) model
         Add name -> {name = name, quantity = 0} :: model
 
-view : Signal.Address ACTION -> Model -> Html  
+view : Signal.Address Action -> Model -> Html  
 view address model = 
     div [] (List.map (\i -> div [] [span [] [text i.name],          
                                  input  [toString i.quantity |> value, on "input" targetValue (Signal.message address << (Type i.name))] [], 

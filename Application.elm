@@ -14,9 +14,9 @@ type alias Model =
         shoppingCart: ShoppingCart.Model
     }   
 
-type ACTION = ShoppingCart ShoppingCart.ACTION | Products Products.ACTION
+type Action = ShoppingCart ShoppingCart.Action | Products Products.Action
 
-update : ACTION -> Model -> Model           
+update : Action -> Model -> Model           
 update action model = 
     case action of 
         ShoppingCart act -> { 
@@ -27,16 +27,11 @@ update action model =
                         case act of 
                             Products.Buy name ->  { 
                                 model |
-                                    products = Products.update (Debug.watch "act1" act) model.products,
+                                    products = Products.update act model.products,
                                     shoppingCart = ShoppingCart.update (ShoppingCart.Add name) model.shoppingCart
                             }
-                            _ ->
-                            { 
-                                model |
-                                    products = Products.update (Debug.watch "act2" act) model.products
-                            }
 
-view : Signal.Address ACTION -> Model -> Html                       
+view : Signal.Address Action -> Model -> Html                       
 view address model = 
     div [] [Products.view (Signal.forwardTo address Products) model.products, ShoppingCart.view (Signal.forwardTo address ShoppingCart) model.shoppingCart]             
           

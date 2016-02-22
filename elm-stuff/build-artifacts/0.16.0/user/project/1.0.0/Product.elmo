@@ -12,17 +12,13 @@ Elm.Product.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var view = F2(function (address,model) {
+   var view = function (model) {
       return A2($Html.div,
       _U.list([]),
       _U.list([A2($Html.span,
       _U.list([]),
       _U.list([$Html.text(model.name)]))]));
-   });
-   var None = {ctor: "None"};
+   };
    var Model = function (a) {    return {name: a};};
-   return _elm.Product.values = {_op: _op
-                                ,Model: Model
-                                ,None: None
-                                ,view: view};
+   return _elm.Product.values = {_op: _op,Model: Model,view: view};
 };

@@ -11417,19 +11417,15 @@ Elm.Product.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var view = F2(function (address,model) {
+   var view = function (model) {
       return A2($Html.div,
       _U.list([]),
       _U.list([A2($Html.span,
       _U.list([]),
       _U.list([$Html.text(model.name)]))]));
-   });
-   var None = {ctor: "None"};
+   };
    var Model = function (a) {    return {name: a};};
-   return _elm.Product.values = {_op: _op
-                                ,Model: Model
-                                ,None: None
-                                ,view: view};
+   return _elm.Product.values = {_op: _op,Model: Model,view: view};
 };
 Elm.Products = Elm.Products || {};
 Elm.Products.make = function (_elm) {
@@ -11449,19 +11445,14 @@ Elm.Products.make = function (_elm) {
    var _op = {};
    var update = F2(function (action,model) {
       var _p0 = action;
-      if (_p0.ctor === "Buy") {
-            return A2($Debug.watch,
-            "newproducts ",
-            A2($List.filter,
-            function (p) {
-               return !_U.eq(p.name,_p0._0);
-            },
-            model));
-         } else {
-            return model;
-         }
+      return A2($Debug.watch,
+      "newproducts ",
+      A2($List.filter,
+      function (p) {
+         return !_U.eq(p.name,_p0._0);
+      },
+      model));
    });
-   var None = function (a) {    return {ctor: "None",_0: a};};
    var Buy = function (a) {    return {ctor: "Buy",_0: a};};
    var view = F2(function (address,model) {
       return A2($Html.div,
@@ -11470,7 +11461,7 @@ Elm.Products.make = function (_elm) {
       function (p) {
          return A2($Html.div,
          _U.list([]),
-         _U.list([A2($Product.view,A2($Signal.forwardTo,address,None),p)
+         _U.list([$Product.view(p)
                  ,A2($Html.button,
                  _U.list([A2($Html$Events.onClick,address,Buy(p.name))]),
                  _U.list([$Html.text("Buy")]))]));
@@ -11479,7 +11470,6 @@ Elm.Products.make = function (_elm) {
    });
    return _elm.Products.values = {_op: _op
                                  ,Buy: Buy
-                                 ,None: None
                                  ,update: update
                                  ,view: view};
 };
@@ -11605,20 +11595,11 @@ Elm.Application.make = function (_elm) {
          } else {
             var _p2 = _p0._0;
             var _p1 = _p2;
-            if (_p1.ctor === "Buy") {
-                  return _U.update(model,
-                  {products: A2($Products.update,
-                  A2($Debug.watch,"act1",_p2),
-                  model.products)
-                  ,shoppingCart: A2($ShoppingCart.update,
-                  $ShoppingCart.Add(_p1._0),
-                  model.shoppingCart)});
-               } else {
-                  return _U.update(model,
-                  {products: A2($Products.update,
-                  A2($Debug.watch,"act2",_p2),
-                  model.products)});
-               }
+            return _U.update(model,
+            {products: A2($Products.update,_p2,model.products)
+            ,shoppingCart: A2($ShoppingCart.update,
+            $ShoppingCart.Add(_p1._0),
+            model.shoppingCart)});
          }
    });
    var Products = function (a) {
