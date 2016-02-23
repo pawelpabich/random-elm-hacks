@@ -6,54 +6,47 @@ Elm.Application.make = function (_elm) {
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
+   $Error = Elm.Error.make(_elm),
+   $Home = Elm.Home.make(_elm),
    $Html = Elm.Html.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
-   $Products = Elm.Products.make(_elm),
+   $Payment = Elm.Payment.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $ShoppingCart = Elm.ShoppingCart.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var update = F2(function (action,model) {
-      var _p0 = action;
-      if (_p0.ctor === "ShoppingCart") {
-            return _U.update(model,
-            {shoppingCart: A2($ShoppingCart.update,
-            _p0._0,
-            model.shoppingCart)});
-         } else {
-            var _p2 = _p0._0;
-            var _p1 = _p2;
-            return _U.update(model,
-            {products: A2($Products.update,_p2,model.products)
-            ,shoppingCart: A2($ShoppingCart.update,
-            $ShoppingCart.Add(_p1._0),
-            model.shoppingCart)});
-         }
-   });
-   var Products = function (a) {
-      return {ctor: "Products",_0: a};
-   };
-   var ShoppingCart = function (a) {
-      return {ctor: "ShoppingCart",_0: a};
-   };
+   var Home = function (a) {    return {ctor: "Home",_0: a};};
    var view = F2(function (address,model) {
-      return A2($Html.div,
-      _U.list([]),
-      _U.list([A2($Products.view,
-              A2($Signal.forwardTo,address,Products),
-              model.products)
-              ,A2($ShoppingCart.view,
-              A2($Signal.forwardTo,address,ShoppingCart),
-              model.shoppingCart)]));
+      var _p0 = model.currentPage;
+      switch (_p0.ctor)
+      {case "HomePage": return A2($Home.view,
+           A2($Signal.forwardTo,address,Home),
+           model.homePage);
+         case "PaymentPage": return $Payment.view(model.paymentPage);
+         default: return $Error.view("Not Found");}
    });
-   var Model = F2(function (a,b) {
-      return {products: a,shoppingCart: b};
+   var Model = F3(function (a,b,c) {
+      return {currentPage: a,homePage: b,paymentPage: c};
    });
+   var ConfirmationPage = {ctor: "ConfirmationPage"};
+   var PaymentPage = {ctor: "PaymentPage"};
+   var HomePage = {ctor: "HomePage"};
+   var update = F2(function (action,model) {
+      var _p1 = action;
+      return _U.update(model,
+      {currentPage: HomePage
+      ,homePage: A2($Home.update,_p1._0,model.homePage)});
+   });
+   var init = $Basics.always({currentPage: HomePage
+                             ,homePage: $Home.init({ctor: "_Tuple0"})
+                             ,paymentPage: $Payment.init({ctor: "_Tuple0"})});
    return _elm.Application.values = {_op: _op
+                                    ,HomePage: HomePage
+                                    ,PaymentPage: PaymentPage
+                                    ,ConfirmationPage: ConfirmationPage
                                     ,Model: Model
-                                    ,ShoppingCart: ShoppingCart
-                                    ,Products: Products
+                                    ,Home: Home
                                     ,update: update
-                                    ,view: view};
+                                    ,view: view
+                                    ,init: init};
 };

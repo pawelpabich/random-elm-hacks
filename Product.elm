@@ -11,6 +11,6 @@ type alias Model =
 
 view : Model -> Html
 view model = 
-    div [] [span [] [text model.name]]
+    li [] [span [] [text model.name]]
             
           

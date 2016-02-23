@@ -12,10 +12,12 @@ Elm.Repl.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
    var tsol = {ctor: "_Tuple0"};
-   var Item = function (a) {    return {a: a};};
-   var deltron3030 = Item;
+   var f = $Basics.always(0);
+   var deltron3030 = f({ctor: "_Tuple0"});
+   var a = f(1);
    return _elm.Repl.values = {_op: _op
-                             ,Item: Item
+                             ,a: a
                              ,deltron3030: deltron3030
+                             ,f: f
                              ,tsol: tsol};
 };

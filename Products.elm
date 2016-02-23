@@ -15,10 +15,10 @@ type Action = Buy String
 update : Action -> Model -> Model
 update action model = 
     case action of 
-        Buy name -> Debug.watch "newproducts " (List.filter (\p -> p.name /= name) model)
+        Buy name -> model
 
 view : Signal.Address Action -> Model -> Html                    
 view address model = 
-    div [] (List.map (\p -> div [] [Product.view p, button [onClick address (Buy p.name)] [text "Buy"]]) model)
+    section [] [h1 [] [text "Products"], ul [] (List.map (\p -> div [] [Product.view p, button [onClick address (Buy p.name)] [text "Buy"]]) model) ]
             
           

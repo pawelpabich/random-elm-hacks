@@ -11418,7 +11418,7 @@ Elm.Product.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
    var view = function (model) {
-      return A2($Html.div,
+      return A2($Html.li,
       _U.list([]),
       _U.list([A2($Html.span,
       _U.list([]),
@@ -11445,28 +11445,27 @@ Elm.Products.make = function (_elm) {
    var _op = {};
    var update = F2(function (action,model) {
       var _p0 = action;
-      return A2($Debug.watch,
-      "newproducts ",
-      A2($List.filter,
-      function (p) {
-         return !_U.eq(p.name,_p0._0);
-      },
-      model));
+      return model;
    });
    var Buy = function (a) {    return {ctor: "Buy",_0: a};};
    var view = F2(function (address,model) {
-      return A2($Html.div,
+      return A2($Html.section,
       _U.list([]),
-      A2($List.map,
-      function (p) {
-         return A2($Html.div,
-         _U.list([]),
-         _U.list([$Product.view(p)
-                 ,A2($Html.button,
-                 _U.list([A2($Html$Events.onClick,address,Buy(p.name))]),
-                 _U.list([$Html.text("Buy")]))]));
-      },
-      model));
+      _U.list([A2($Html.h1,
+              _U.list([]),
+              _U.list([$Html.text("Products")]))
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              function (p) {
+                 return A2($Html.div,
+                 _U.list([]),
+                 _U.list([$Product.view(p)
+                         ,A2($Html.button,
+                         _U.list([A2($Html$Events.onClick,address,Buy(p.name))]),
+                         _U.list([$Html.text("Buy")]))]));
+              },
+              model))]));
    });
    return _elm.Products.values = {_op: _op
                                  ,Buy: Buy
@@ -11515,10 +11514,17 @@ Elm.ShoppingCart.make = function (_elm) {
               _p0._1))))}) : i;
            },
            model);
-         default: return A2($List._op["::"],
-           {name: _p0._0,quantity: 0},
-           model);}
+         case "Add": var _p1 = _p0._0;
+           return A2($List.any,
+           function (i) {
+              return _U.eq(i.name,_p1);
+           },
+           model) ? model : A2($List._op["::"],
+           {name: _p1,quantity: 0},
+           model);
+         default: return model;}
    });
+   var Pay = {ctor: "Pay"};
    var Add = function (a) {    return {ctor: "Add",_0: a};};
    var Type = F2(function (a,b) {
       return {ctor: "Type",_0: a,_1: b};
@@ -11530,32 +11536,40 @@ Elm.ShoppingCart.make = function (_elm) {
       return {ctor: "Increment",_0: a};
    };
    var view = F2(function (address,model) {
-      return A2($Html.div,
+      return A2($Html.section,
       _U.list([]),
-      A2($List.map,
-      function (i) {
-         return A2($Html.div,
-         _U.list([]),
-         _U.list([A2($Html.span,
+      _U.list([A2($Html.h1,
+              _U.list([]),
+              _U.list([$Html.text("Shopping Cart")]))
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              function (i) {
+                 return A2($Html.li,
                  _U.list([]),
-                 _U.list([$Html.text(i.name)]))
-                 ,A2($Html.input,
-                 _U.list([$Html$Attributes.value($Basics.toString(i.quantity))
-                         ,A3($Html$Events.on,
-                         "input",
-                         $Html$Events.targetValue,
-                         function (_p1) {
-                            return A2($Signal.message,address,A2(Type,i.name,_p1));
-                         })]),
-                 _U.list([]))
-                 ,A2($Html.button,
-                 _U.list([A2($Html$Events.onClick,address,Increment(i.name))]),
-                 _U.list([$Html.text("+")]))
-                 ,A2($Html.button,
-                 _U.list([A2($Html$Events.onClick,address,Decrement(i.name))]),
-                 _U.list([$Html.text("-")]))]));
-      },
-      model));
+                 _U.list([A2($Html.span,
+                         _U.list([]),
+                         _U.list([$Html.text(i.name)]))
+                         ,A2($Html.input,
+                         _U.list([$Html$Attributes.value($Basics.toString(i.quantity))
+                                 ,A3($Html$Events.on,
+                                 "input",
+                                 $Html$Events.targetValue,
+                                 function (_p2) {
+                                    return A2($Signal.message,address,A2(Type,i.name,_p2));
+                                 })]),
+                         _U.list([]))
+                         ,A2($Html.button,
+                         _U.list([A2($Html$Events.onClick,address,Increment(i.name))]),
+                         _U.list([$Html.text("+")]))
+                         ,A2($Html.button,
+                         _U.list([A2($Html$Events.onClick,address,Decrement(i.name))]),
+                         _U.list([$Html.text("-")]))]));
+              },
+              model))
+              ,A2($Html.button,
+              _U.list([A2($Html$Events.onClick,address,Pay)]),
+              _U.list([$Html.text("Pay")]))]));
    });
    var Item = F2(function (a,b) {
       return {quantity: a,name: b};
@@ -11566,14 +11580,15 @@ Elm.ShoppingCart.make = function (_elm) {
                                      ,Decrement: Decrement
                                      ,Type: Type
                                      ,Add: Add
+                                     ,Pay: Pay
                                      ,update: update
                                      ,view: view};
 };
-Elm.Application = Elm.Application || {};
-Elm.Application.make = function (_elm) {
+Elm.Home = Elm.Home || {};
+Elm.Home.make = function (_elm) {
    "use strict";
-   _elm.Application = _elm.Application || {};
-   if (_elm.Application.values) return _elm.Application.values;
+   _elm.Home = _elm.Home || {};
+   if (_elm.Home.values) return _elm.Home.values;
    var _U = Elm.Native.Utils.make(_elm),
    $Basics = Elm.Basics.make(_elm),
    $Debug = Elm.Debug.make(_elm),
@@ -11585,6 +11600,9 @@ Elm.Application.make = function (_elm) {
    $ShoppingCart = Elm.ShoppingCart.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
+   var init = $Basics.always({products: _U.list([{name: "Phone"}
+                                                ,{name: "Ski"}])
+                             ,shoppingCart: _U.list([])});
    var update = F2(function (action,model) {
       var _p0 = action;
       if (_p0.ctor === "ShoppingCart") {
@@ -11621,12 +11639,112 @@ Elm.Application.make = function (_elm) {
    var Model = F2(function (a,b) {
       return {products: a,shoppingCart: b};
    });
+   return _elm.Home.values = {_op: _op
+                             ,Model: Model
+                             ,ShoppingCart: ShoppingCart
+                             ,Products: Products
+                             ,update: update
+                             ,view: view
+                             ,init: init};
+};
+Elm.Error = Elm.Error || {};
+Elm.Error.make = function (_elm) {
+   "use strict";
+   _elm.Error = _elm.Error || {};
+   if (_elm.Error.values) return _elm.Error.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var view = function (model) {
+      return A2($Html.section,
+      _U.list([]),
+      _U.list([A2($Html.span,
+      _U.list([]),
+      _U.list([$Html.text(model)]))]));
+   };
+   return _elm.Error.values = {_op: _op,view: view};
+};
+Elm.Payment = Elm.Payment || {};
+Elm.Payment.make = function (_elm) {
+   "use strict";
+   _elm.Payment = _elm.Payment || {};
+   if (_elm.Payment.values) return _elm.Payment.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var init = $Basics.always(0);
+   var view = function (model) {
+      return A2($Html.section,
+      _U.list([]),
+      _U.list([A2($Html.span,
+      _U.list([]),
+      _U.list([$Html.text($Basics.toString(model))]))]));
+   };
+   return _elm.Payment.values = {_op: _op,view: view,init: init};
+};
+Elm.Application = Elm.Application || {};
+Elm.Application.make = function (_elm) {
+   "use strict";
+   _elm.Application = _elm.Application || {};
+   if (_elm.Application.values) return _elm.Application.values;
+   var _U = Elm.Native.Utils.make(_elm),
+   $Basics = Elm.Basics.make(_elm),
+   $Debug = Elm.Debug.make(_elm),
+   $Error = Elm.Error.make(_elm),
+   $Home = Elm.Home.make(_elm),
+   $Html = Elm.Html.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Payment = Elm.Payment.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm);
+   var _op = {};
+   var Home = function (a) {    return {ctor: "Home",_0: a};};
+   var view = F2(function (address,model) {
+      var _p0 = model.currentPage;
+      switch (_p0.ctor)
+      {case "HomePage": return A2($Home.view,
+           A2($Signal.forwardTo,address,Home),
+           model.homePage);
+         case "PaymentPage": return $Payment.view(model.paymentPage);
+         default: return $Error.view("Not Found");}
+   });
+   var Model = F3(function (a,b,c) {
+      return {currentPage: a,homePage: b,paymentPage: c};
+   });
+   var ConfirmationPage = {ctor: "ConfirmationPage"};
+   var PaymentPage = {ctor: "PaymentPage"};
+   var HomePage = {ctor: "HomePage"};
+   var update = F2(function (action,model) {
+      var _p1 = action;
+      return _U.update(model,
+      {currentPage: HomePage
+      ,homePage: A2($Home.update,_p1._0,model.homePage)});
+   });
+   var init = $Basics.always({currentPage: HomePage
+                             ,homePage: $Home.init({ctor: "_Tuple0"})
+                             ,paymentPage: $Payment.init({ctor: "_Tuple0"})});
    return _elm.Application.values = {_op: _op
+                                    ,HomePage: HomePage
+                                    ,PaymentPage: PaymentPage
+                                    ,ConfirmationPage: ConfirmationPage
                                     ,Model: Model
-                                    ,ShoppingCart: ShoppingCart
-                                    ,Products: Products
+                                    ,Home: Home
                                     ,update: update
-                                    ,view: view};
+                                    ,view: view
+                                    ,init: init};
 };
 Elm.Main = Elm.Main || {};
 Elm.Main.make = function (_elm) {
@@ -11643,9 +11761,7 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: {products: _U.list([{name: "Phone"}
-                                                                ,{name: "Ski"}])
-                                             ,shoppingCart: _U.list([])}
+   var main = $StartApp$Simple.start({model: $Application.init({ctor: "_Tuple0"})
                                      ,update: $Application.update
                                      ,view: $Application.view});
    return _elm.Main.values = {_op: _op,main: main};

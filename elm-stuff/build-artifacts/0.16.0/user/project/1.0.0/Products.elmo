@@ -16,28 +16,27 @@ Elm.Products.make = function (_elm) {
    var _op = {};
    var update = F2(function (action,model) {
       var _p0 = action;
-      return A2($Debug.watch,
-      "newproducts ",
-      A2($List.filter,
-      function (p) {
-         return !_U.eq(p.name,_p0._0);
-      },
-      model));
+      return model;
    });
    var Buy = function (a) {    return {ctor: "Buy",_0: a};};
    var view = F2(function (address,model) {
-      return A2($Html.div,
+      return A2($Html.section,
       _U.list([]),
-      A2($List.map,
-      function (p) {
-         return A2($Html.div,
-         _U.list([]),
-         _U.list([$Product.view(p)
-                 ,A2($Html.button,
-                 _U.list([A2($Html$Events.onClick,address,Buy(p.name))]),
-                 _U.list([$Html.text("Buy")]))]));
-      },
-      model));
+      _U.list([A2($Html.h1,
+              _U.list([]),
+              _U.list([$Html.text("Products")]))
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              function (p) {
+                 return A2($Html.div,
+                 _U.list([]),
+                 _U.list([$Product.view(p)
+                         ,A2($Html.button,
+                         _U.list([A2($Html$Events.onClick,address,Buy(p.name))]),
+                         _U.list([$Html.text("Buy")]))]));
+              },
+              model))]));
    });
    return _elm.Products.values = {_op: _op
                                  ,Buy: Buy

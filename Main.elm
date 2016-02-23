@@ -3,9 +3,7 @@ import StartApp.Simple exposing (start)
 
 main =
   start
-    { model =  { products = [{name = "Phone"}, {name = "Ski"}], shoppingCart = [] },
+    { model = Application.init(),
       update = Application.update,
       view = Application.view
     }
-
-          

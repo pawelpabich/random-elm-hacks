@@ -40,10 +40,17 @@ Elm.ShoppingCart.make = function (_elm) {
               _p0._1))))}) : i;
            },
            model);
-         default: return A2($List._op["::"],
-           {name: _p0._0,quantity: 0},
-           model);}
+         case "Add": var _p1 = _p0._0;
+           return A2($List.any,
+           function (i) {
+              return _U.eq(i.name,_p1);
+           },
+           model) ? model : A2($List._op["::"],
+           {name: _p1,quantity: 0},
+           model);
+         default: return model;}
    });
+   var Pay = {ctor: "Pay"};
    var Add = function (a) {    return {ctor: "Add",_0: a};};
    var Type = F2(function (a,b) {
       return {ctor: "Type",_0: a,_1: b};
@@ -55,32 +62,40 @@ Elm.ShoppingCart.make = function (_elm) {
       return {ctor: "Increment",_0: a};
    };
    var view = F2(function (address,model) {
-      return A2($Html.div,
+      return A2($Html.section,
       _U.list([]),
-      A2($List.map,
-      function (i) {
-         return A2($Html.div,
-         _U.list([]),
-         _U.list([A2($Html.span,
+      _U.list([A2($Html.h1,
+              _U.list([]),
+              _U.list([$Html.text("Shopping Cart")]))
+              ,A2($Html.ul,
+              _U.list([]),
+              A2($List.map,
+              function (i) {
+                 return A2($Html.li,
                  _U.list([]),
-                 _U.list([$Html.text(i.name)]))
-                 ,A2($Html.input,
-                 _U.list([$Html$Attributes.value($Basics.toString(i.quantity))
-                         ,A3($Html$Events.on,
-                         "input",
-                         $Html$Events.targetValue,
-                         function (_p1) {
-                            return A2($Signal.message,address,A2(Type,i.name,_p1));
-                         })]),
-                 _U.list([]))
-                 ,A2($Html.button,
-                 _U.list([A2($Html$Events.onClick,address,Increment(i.name))]),
-                 _U.list([$Html.text("+")]))
-                 ,A2($Html.button,
-                 _U.list([A2($Html$Events.onClick,address,Decrement(i.name))]),
-                 _U.list([$Html.text("-")]))]));
-      },
-      model));
+                 _U.list([A2($Html.span,
+                         _U.list([]),
+                         _U.list([$Html.text(i.name)]))
+                         ,A2($Html.input,
+                         _U.list([$Html$Attributes.value($Basics.toString(i.quantity))
+                                 ,A3($Html$Events.on,
+                                 "input",
+                                 $Html$Events.targetValue,
+                                 function (_p2) {
+                                    return A2($Signal.message,address,A2(Type,i.name,_p2));
+                                 })]),
+                         _U.list([]))
+                         ,A2($Html.button,
+                         _U.list([A2($Html$Events.onClick,address,Increment(i.name))]),
+                         _U.list([$Html.text("+")]))
+                         ,A2($Html.button,
+                         _U.list([A2($Html$Events.onClick,address,Decrement(i.name))]),
+                         _U.list([$Html.text("-")]))]));
+              },
+              model))
+              ,A2($Html.button,
+              _U.list([A2($Html$Events.onClick,address,Pay)]),
+              _U.list([$Html.text("Pay")]))]));
    });
    var Item = F2(function (a,b) {
       return {quantity: a,name: b};
@@ -91,6 +106,7 @@ Elm.ShoppingCart.make = function (_elm) {
                                      ,Decrement: Decrement
                                      ,Type: Type
                                      ,Add: Add
+                                     ,Pay: Pay
                                      ,update: update
                                      ,view: view};
 };
