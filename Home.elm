@@ -35,9 +35,8 @@ view : Signal.Address Action -> Model -> Html
 view address model = 
     div [] [Products.view (Signal.forwardTo address Products) model.products, ShoppingCart.view (Signal.forwardTo address ShoppingCart) model.shoppingCart]             
 
-init: a -> Model
-init  =
-    always {
+init: Model
+init  = {
         products =  [{name = "Phone"}, {name = "Ski"}],
         shoppingCart = []
     }           

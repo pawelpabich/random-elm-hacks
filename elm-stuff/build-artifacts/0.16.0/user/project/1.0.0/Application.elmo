@@ -37,9 +37,9 @@ Elm.Application.make = function (_elm) {
       {currentPage: HomePage
       ,homePage: A2($Home.update,_p1._0,model.homePage)});
    });
-   var init = $Basics.always({currentPage: HomePage
-                             ,homePage: $Home.init({ctor: "_Tuple0"})
-                             ,paymentPage: $Payment.init({ctor: "_Tuple0"})});
+   var init = {currentPage: HomePage
+              ,homePage: $Home.init
+              ,paymentPage: $Payment.init};
    return _elm.Application.values = {_op: _op
                                     ,HomePage: HomePage
                                     ,PaymentPage: PaymentPage

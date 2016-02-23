@@ -11600,9 +11600,8 @@ Elm.Home.make = function (_elm) {
    $ShoppingCart = Elm.ShoppingCart.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var init = $Basics.always({products: _U.list([{name: "Phone"}
-                                                ,{name: "Ski"}])
-                             ,shoppingCart: _U.list([])});
+   var init = {products: _U.list([{name: "Phone"},{name: "Ski"}])
+              ,shoppingCart: _U.list([])};
    var update = F2(function (action,model) {
       var _p0 = action;
       if (_p0.ctor === "ShoppingCart") {
@@ -11684,7 +11683,7 @@ Elm.Payment.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var init = $Basics.always(0);
+   var init = 0;
    var view = function (model) {
       return A2($Html.section,
       _U.list([]),
@@ -11733,9 +11732,9 @@ Elm.Application.make = function (_elm) {
       {currentPage: HomePage
       ,homePage: A2($Home.update,_p1._0,model.homePage)});
    });
-   var init = $Basics.always({currentPage: HomePage
-                             ,homePage: $Home.init({ctor: "_Tuple0"})
-                             ,paymentPage: $Payment.init({ctor: "_Tuple0"})});
+   var init = {currentPage: HomePage
+              ,homePage: $Home.init
+              ,paymentPage: $Payment.init};
    return _elm.Application.values = {_op: _op
                                     ,HomePage: HomePage
                                     ,PaymentPage: PaymentPage
@@ -11761,7 +11760,7 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
-   var main = $StartApp$Simple.start({model: $Application.init({ctor: "_Tuple0"})
+   var main = $StartApp$Simple.start({model: $Application.init
                                      ,update: $Application.update
                                      ,view: $Application.view});
    return _elm.Main.values = {_op: _op,main: main};

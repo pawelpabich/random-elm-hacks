@@ -12,7 +12,7 @@ Elm.Payment.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var init = $Basics.always(0);
+   var init = 0;
    var view = function (model) {
       return A2($Html.section,
       _U.list([]),

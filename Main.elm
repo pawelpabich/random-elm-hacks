@@ -3,7 +3,7 @@ import StartApp.Simple exposing (start)
 
 main =
   start
-    { model = Application.init(),
+    { model = Application.init,
       update = Application.update,
       view = Application.view
     }

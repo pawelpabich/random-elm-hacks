@@ -8,5 +8,5 @@ view : Model -> Html
 view model = 
     section [] [span [] [text (toString model)]]
     
-init: a -> Model
-init = always 0
+init: Model
+init = 0

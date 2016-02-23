@@ -14,9 +14,8 @@ Elm.Home.make = function (_elm) {
    $ShoppingCart = Elm.ShoppingCart.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var _op = {};
-   var init = $Basics.always({products: _U.list([{name: "Phone"}
-                                                ,{name: "Ski"}])
-                             ,shoppingCart: _U.list([])});
+   var init = {products: _U.list([{name: "Phone"},{name: "Ski"}])
+              ,shoppingCart: _U.list([])};
    var update = F2(function (action,model) {
       var _p0 = action;
       if (_p0.ctor === "ShoppingCart") {

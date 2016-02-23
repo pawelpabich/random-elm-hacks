@@ -34,6 +34,5 @@ view address model =
         PaymentPage -> Payment.view model.paymentPage
         _        -> Error.view "Not Found"             
 
-init: a -> Model
-init =
-    always { currentPage = HomePage, homePage = Home.init(), paymentPage = Payment.init() }          
+init: Model
+init = { currentPage = HomePage, homePage = Home.init, paymentPage = Payment.init }          
